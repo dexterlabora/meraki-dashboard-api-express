@@ -4,12 +4,13 @@
 
 
 ## Install
-Clone this repository and change into the directory, install dependencies and run the server.
+- Clone this repository and change into the directory, 
+- Update your API key in the `configs.js` file.
+- Install dependencies and run the server.
 
 ```
-npm install
-node server.js
-node server.js
+$ npm install
+$ node server.js
 
 WWW Server: http://::8085/
 Meraki API Client Proxy: http://:::8085/api
@@ -31,7 +32,11 @@ The Vue application demonstrates how to access the Meraki API endpoints.
 
 Update the **API key** in the **Admin** menu to get started
 
-You typically need to first call the organizations endpoint and then pull the network list before most calls can be made. This demo provides a selector to define these variables, to then be used in a few API requests. The app will display the API responses in a window. By clicking on the API links provided, you can use the server defined API key as a standalone proxy. 
+You typically need to first call the organizations endpoint and then pull the network list before most calls can be made. This demo provides a selector to define these variables, to then be used in a few API requests. 
+
+Each endpoint has a button to display the API responses. 
+
+By clicking on the API links provided, you can use the server defined API key as a standalone proxy. 
 
 
 ## Overview
