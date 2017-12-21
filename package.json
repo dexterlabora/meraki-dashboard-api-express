@@ -1,0 +1,25 @@
+{
+  "name": "meraki-dashboard-api-express",
+  "version": "1.0.0",
+  "description": "Meraki Dashboard API Express server with basic Vue JS demo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Cisco",
+    "Meraki",
+    "Dashboard",
+    "API"
+  ],
+  "author": "Cory Guynn",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "global-request-logger": "^0.1.1",
+    "json-bigint": "^0.2.3",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0"
+  }
+}
