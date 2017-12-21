@@ -107,8 +107,8 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 // Start server
 var port = process.env.PORT || 8085;
 var server = app.listen(port, () => {
-  console.log('Server Running on '+ server.address().address+port+'/');
-  console.log('Meraki API Proxy: localhost:'+server.address().address+ ':' +port+'/api');
-  console.log('Default API Endpoint: ', configs.apiUrl);
+  console.log('WWW Server: http://'+ server.address().address+port+'/');
+  console.log('Meraki API Client Proxy: http://'+server.address().address+ ':' +port+'/api');
+  console.log('Meraki API Endpoint: ', configs.apiUrl);
 });
 

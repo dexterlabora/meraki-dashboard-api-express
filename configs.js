@@ -2,6 +2,6 @@
 
 module.exports = 
 {
-    apiKey: 'be647eed3046542a895ea9ad07b7f7cef4c002de',
+    apiKey: '', // Enter Your API Key as server default
     apiUrl: 'https://api.meraki.com/api/v0'
 }
