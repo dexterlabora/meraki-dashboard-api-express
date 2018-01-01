@@ -38,6 +38,10 @@ http://localhost:8085/api
 
 
 ## Demo
+
+### Live Demo on Heroku
+https://meraki-dashboard-api-express.herokuapp.com/
+
 The Vue application demonstrates how to access the Meraki API endpoints. 
 
 Update the **API key** in the **Admin** menu to get started
