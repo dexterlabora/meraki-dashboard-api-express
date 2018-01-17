@@ -85,6 +85,49 @@
               </v-flex>
           </v-layout>
         
+          <v-layout>
+            <v-flex xs6>
+              <v-card>
+                <v-card-title primary-title class="headline mb-0"><h5>Create Network</h5></v-card-title>
+                <v-card-text>
+                  <v-text-field
+                    name="name"
+                    label="Network Name"
+                    v-model="networkForm.name"
+                    ></v-text-field>
+                  <v-text-field
+                    name="tags"
+                    label="Tags"
+                    v-model="networkForm.tags"
+                    ></v-text-field>
+                  <v-select
+                    v-bind:items="networkFormOptions.types"
+                    v-model="networkForm.type"
+                    label="Type"
+                    single-line
+                    bottom
+                  ></v-select>
+                  <v-select
+                    v-bind:items="networkFormOptions.timeZones"
+                    v-model="networkForm.timeZone"
+                    label="Time Zone"
+                    single-line
+                    bottom
+                  ></v-select>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn flat color="orange" @click="submitNetworkForm()"><v-icon dark>play_arrow</v-icon>[POST]</v-btn>
+                </v-card-actions>                   
+              </v-card>
+            </v-flex>
+            <v-flex xs6>
+                <v-card>
+                    <v-card-title primary-title class="headline mb-0"><h3>API Response</h3></v-card-title>
+                    <v-card-text class="px-0" left><pre>{{merakiData}}</pre></v-card-text>
+                </v-card>
+            </v-flex>
+          </v-layout>
+
 
           <v-layout>
               <v-flex xs6>
@@ -99,12 +142,6 @@
                   </v-card-actions>                   
                 </v-card>
               </v-flex>
-              <v-flex xs6>
-                  <v-card>
-                      <v-card-title primary-title class="headline mb-0"><h3>API Response</h3></v-card-title>
-                      <v-card-text class="px-0" left><pre>{{merakiData}}</pre></v-card-text>
-                  </v-card>
-              </v-flex>
             </v-layout>
         </v-container>
     </v-content>
@@ -113,13 +150,20 @@
   <script src='https://unpkg.com/vue/dist/vue.js'></script>
   <script src='https://unpkg.com/vuetify/dist/vuetify.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.js"></script>
   <script>
-    
+
 
       new Vue({
        el: '#app',
        data () {
          return {
+           networkForm: {},
+           networkFormOptions: {
+             types: ['wireless', 'switch', 'appliance', 'phone'],
+             timeZones: moment.tz.names()
+           },
            apiKey: '',
            adminMode: false,
            orgs: [],
@@ -213,11 +257,29 @@
            .then(response => {
             // JSON responses are automatically parsed.
             this.nets = response.data
-            this.json = this.nets;
+            this.merakiData = this.nets;
           })
           .catch(e => {
             this.errors.push(e)
           })
+         },
+         createNetwork (orgId, data) {
+           axios.post('/api/organizations/'+orgId+'/networks', data )
+           .then(response => {
+             console.log('createNetwork response', response.data);
+             this.merakiData = response.data;
+           })
+           .catch(e => {
+            this.errors.push(e)
+          })
+         },
+         submitNetworkForm(){
+           this.createNetwork (this.org.id, {
+             name: this.networkForm.name,
+             tags: this.networkForm.tags,
+             timeZone: this.networkForm.timeZone,
+             type: this.networkForm.type
+           })
          }
        },
        filters: {
