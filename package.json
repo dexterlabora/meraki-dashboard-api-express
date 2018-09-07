@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "global-request-logger": "^0.1.1",
     "json-bigint": "^0.2.3",
