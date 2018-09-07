@@ -1,4 +1,4 @@
-// Handles Meraki API requests. Has additional logic to follow the HTTP redirects properly.
+// Handles Meraki API requests. Has additional logic to follow the HTTP redirects properly and handle OrgID being converted to INTs
 
 var request = require("request");
 var JSONbig = require("json-bigint")({ storeAsString: true });
