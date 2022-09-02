@@ -1,203 +1,210 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Meraki API Starter</title>
-  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
-  <link rel='stylesheet prefetch' href='https://unpkg.com/vuetify/dist/vuetify.min.css'>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
 
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
 </head>
 
 <body>
   <div id="app">
-  <v-app light>
-    <v-toolbar dark color="primary">
-      <v-toolbar-title >Meraki Dashboard API - Basic Starter</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn flat @click="adminMode = !adminMode">Admin</v-btn>
+    <v-app light>
+      <v-container grid-list-md>
+      <v-toolbar dark dense color="primary">
+        <v-toolbar-title>Meraki Dashboard API - Basic Starter</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn @click="adminMode = !adminMode">Admin</v-btn>
         </v-toolbar-items>
-    </v-toolbar>
-    <v-content>
-        <v-container grid-list-md >
+      </v-toolbar>
+      <v-content>
+      
           <v-layout row wrap>
-              <v-flex xs12>
-                <v-card v-if="adminMode" dark>
-                  <v-card-text class="ml-3" >
-                      <h4>Admin Settings</h4>
-                      <v-layout row>
-                        <v-flex xs8>
-                          <v-text-field
-                            label="API Key"
-                            v-model="apiKey"
-                          ></v-text-field>
-                          <v-btn
-                            @click="getOrgs" 
-                            color="primary" 
-                            dark>
-                            Apply Changes
-                          </v-btn>
-                        </v-flex>
-                      </v-layout>
-                      <br>
-                      <v-spacer></v-spacer>
-                      <v-card-text>
-                        <h4>Set Default API Key</h4>
-                          <p class="card-text" >Update the <code>configs.js</code> file with your Meraki API key.</code>
-                      </v-card-text>
-                      
-                      <v-card-text>
-                        <h4>Access API Resources</h4>
-                        <p class="card-text">Use <code>/api</code> as the base URL for the Meraki API endpoint.</p>
-                        <p><code>https://api.meraki.com/api/v0/organizations</code> becomes <code>/api/organizations</code></p>
-                      </v-card-text>
-                    
+            <v-flex xs12>
+              <v-card v-if="adminMode" dark>
+                <v-card-text class="ml-3">
+                  <h4>Admin Settings</h4>
+                  <v-layout row>
+                    <v-flex xs8>
+                      <v-text-field label="API Key" v-model="apiKey"></v-text-field>
+                      <v-btn @click="getOrgs" color="primary" dark>
+                        Apply Changes
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                  <br>
+                  <v-spacer></v-spacer>
+                  <v-card-text>
+                    <h4>Set Default API Key</h4>
+                    <p class="card-text">Update the <code>configs.js</code> file with your Meraki API key.</code>
                   </v-card-text>
-                </v-card>
-              </v-flex>
-          </v-layout>
-          
-          <v-layout row wrap>
-            <v-flex xs4>
-              <v-select
-                v-bind:items="orgs"
-                v-model="org"
-                label="Organization"
-                class="input-group--focused"
-                item-text="name"
-              ></v-select>
-              <v-select
-                v-bind:items="nets"
-                v-model="net"
-                label="Network"
-                class="input-group--focused"
-                item-text="name"
-              ></v-select>
-            </v-flex>
-              <v-flex xs6 offset-xs2>
-                <h2>Cisco Meraki Dashboard API</h2>
-                <p>
-                  Start building a webapp with Meraki APIs easily with this starter server. It is built with an Express backend to proxy Meraki API requests. 
-                </p>
-                <p>
-                  To start, the default route <code>/</code> lands on this <code>index.html</code> page. This file runs a simple <a href="https://vuejs.org"> Vue.js</a> application with <a href="https://vuetifyjs.com">Vuetify</a> to demonstrate the starting concepts for interacting with the API. Build out a site using your framework of choice. 
-                </p>
-              </v-flex>
-          </v-layout>
-        
-          <v-layout>
-            <v-flex xs6>
-              <v-card>
-                <v-card-title primary-title class="headline mb-0"><h5>Create Network</h5></v-card-title>
-                <v-card-text>
-                  <v-text-field
-                    name="name"
-                    label="Network Name"
-                    v-model="networkForm.name"
-                    ></v-text-field>
-                  <v-text-field
-                    name="tags"
-                    label="Tags"
-                    v-model="networkForm.tags"
-                    ></v-text-field>
-                  <v-select
-                    v-bind:items="networkFormOptions.types"
-                    v-model="networkForm.type"
-                    label="Type"
-                    single-line
-                    bottom
-                  ></v-select>
-                  <v-select
-                    v-bind:items="networkFormOptions.timeZones"
-                    v-model="networkForm.timeZone"
-                    label="Time Zone"
-                    single-line
-                    bottom
-                  ></v-select>
+
+                  <v-card-text>
+                    <h4>Access API Resources</h4>
+                    <p class="card-text">Use <code>/api</code> as the base URL for the Meraki API endpoint.</p>
+                    <p><code>https://api.meraki.com/api/v1/organizations</code> becomes <code>/api/organizations</code>
+                    </p>
+                  </v-card-text>
+
                 </v-card-text>
-                <v-card-actions>
-                    <v-btn flat color="orange" @click="submitNetworkForm()"><v-icon dark>play_arrow</v-icon>[POST]</v-btn>
-                </v-card-actions>                   
               </v-card>
             </v-flex>
-            <v-flex xs6>
-                <v-card>
-                    <v-card-title primary-title class="headline mb-0"><h3>API Response</h3></v-card-title>
-                    <v-card-text class="px-0" left><pre>{{merakiData}}</pre></v-card-text>
-                </v-card>
+          </v-layout>
+
+          <v-layout row wrap>
+            <v-flex xs4>
+              <v-select v-bind:items="orgs" v-model="org" label="Organization" class="input-group--focused"
+                item-text="name"></v-select>
+              <v-select v-bind:items="nets" v-model="net" label="Network" class="input-group--focused" item-text="name">
+              </v-select>
+            </v-flex>
+            <v-flex xs6 offset-xs2>
+              <h2>Cisco Meraki Dashboard API</h2>
+              <p>
+                Start building a webapp with Meraki APIs easily with this starter server. It is built with an Express
+                backend to proxy Meraki API requests.
+              </p>
+              <p>
+                To start, the default route <code>/</code> lands on this <code>index.html</code> page. This file runs a
+                simple <a href="https://vuejs.org"> Vue.js</a> application with <a
+                  href="https://vuetifyjs.com">Vuetify</a> to demonstrate the starting concepts for interacting with the
+                API. Build out a site using your framework of choice.
+              </p>
             </v-flex>
           </v-layout>
 
 
-          <v-layout>
-              <v-flex xs6>
-                <v-card v-for="(api, index) in apis" :key="index">
-                  <v-card-title primary-title class="headline mb-0"><h5>{{api.name}}</h5></v-card-title>
-                  <v-card-text class="px-0" left>
-                      
+          <v-container>
+            <v-row style="height: 150px;">
+              <v-col key="1">
+
+                <v-row>
+                  <v-col>
+                    <v-card v-for="(api, index) in apis" :key="index" class="mb-5">
+                      <v-card-title primary-title class="headline ">
+                        <h5>{{api.name}}</h5>
+                      </v-card-title>
+                      <v-card-text class="px-0" left>
+
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn color="orange" @click="getMeraki(api.url)">
+                          <v-icon dark></v-icon>[GET]
+                        </v-btn>
+                        <code><v-label class="ml-5">{{api.url}}</v-label></code>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+
+
+                </v-row>
+                <v-row>
+                  <v-card class="pa-5">
+                    <v-card-title primary-title class="headline mb-0">
+                      <h5>Create Network</h5>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-text-field name="name" label="Network Name" v-model="networkForm.name"></v-text-field>
+                      <v-text-field name="tags" label="Tags" v-model="networkForm.tags"></v-text-field>
+                      <v-select v-bind:items="networkFormOptions.types" v-model="networkForm.type" label="Type"
+                        single-line bottom></v-select>
+                      <v-select v-bind:items="networkFormOptions.timeZones" v-model="networkForm.timeZone"
+                        label="Time Zone" single-line bottom></v-select>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn color="orange" @click="submitNetworkForm()">
+                        <v-icon dark></v-icon>[POST]
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-row>
+              </v-col>
+              <v-col class="pa-2" key="2" style="overflow: auto;" >
+
+
+                <v-card style="height:800px" class="pr-5" >
+                  <v-card-title primary-title class="headline mb-0" >
+                    <h3>API Response</h3>
+                  </v-card-title>
+                  <v-card-text class="px-0" left >
+                    <pre>{{merakiData}}</pre>
                   </v-card-text>
-                  <v-card-actions>
-                      <v-btn flat color="orange" @click="getMeraki(api.url)"><v-icon dark>play_arrow</v-icon>[GET]</v-btn>
-                      <a target="_blank" :href="api.url">{{api.url}}</a>
-                  </v-card-actions>                   
                 </v-card>
-              </v-flex>
-            </v-layout>
+              </v-col>
+              <v-responsive
+          v-if="n === 2"
+          :key="`width-${n}`"
+          width="100%"
+        ></v-responsive>
+            </v-row>
+          </v-container>
+
+          </v-layout>
+
+
+
         </v-container>
-    </v-content>
-  </v-app>
-</div>
-  <script src='https://unpkg.com/vue/dist/vue.js'></script>
-  <script src='https://unpkg.com/vuetify/dist/vuetify.min.js'></script>
+      </v-content>
+    </v-app>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.js"></script>
   <script>
 
 
-      new Vue({
-       el: '#app',
-       data () {
-         return {
-           networkForm: {},
-           networkFormOptions: {
-             types: ['wireless', 'switch', 'appliance', 'phone'],
-             timeZones: moment.tz.names()
-           },
-           apiKey: '',
-           adminMode: false,
-           orgs: [],
-           org: {
-             name: 'Not Selected',
-             id: 0
-           },
-           nets: [],
-           net: {
-             name: 'Not Selected',
-             id: 0
-           },
-           errors: [],
-           merakiData: [],         
-         }
-       },
-       created: function () {
-         this.getOrgs();
-       },
-       computed: {
-        headers: function () { 
-          return {
-             'x-cisco-meraki-api-key': this.apiKey,
-             'content-type': 'application/json' 
-            }
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          networkForm: {},
+          networkFormOptions: {
+            types: ['wireless', 'switch', 'appliance', 'phone'],
+            timeZones: moment.tz.names()
           },
+          apiKey: '',
+          adminMode: false,
+          orgs: [],
+          org: {
+            name: 'Not Selected',
+            id: 0
+          },
+          nets: [],
+          net: {
+            name: 'Not Selected',
+            id: 0
+          },
+          errors: [],
+          merakiData: [],
+        }
+      },
+      created: function () {
+        this.getOrgs();
+      },
+      computed: {
+        headers: function () {
+          return {
+            'x-cisco-meraki-api-key': this.apiKey,
+            'content-type': 'application/json'
+          }
+        },
         netUrl: function () {
-          return '/api/organizations/'+this.org.id+'/networks'
+          return '/api/organizations/' + this.org.id + '/networks'
         },
         ssidsUrl: function () {
-          return '/api/networks/'+this.net.id+'/ssids'
+          return '/api/networks/' + this.net.id + '/ssids'
         },
         apis: function () {
           return [
@@ -207,86 +214,86 @@
             },
             {
               name: 'Networks',
-              url: '/api/organizations/'+this.org.id+'/networks'
+              url: '/api/organizations/' + this.org.id + '/networks'
             },
             {
               name: 'SSIDs',
-              url: '/api/networks/'+this.net.id+'/ssids'
+              url: '/api/networks/' + this.net.id + '/wireless/ssids'
             },
             {
               name: 'Devices',
-              url: '/api/networks/'+this.net.id+'/devices'
+              url: '/api/networks/' + this.net.id + '/devices'
             }
           ]
         }
-       },
-       methods: {
-         getMeraki (resource) {
-           axios.get(resource)
-           .then(response => {
-            // JSON responses are automatically parsed.
-            this.merakiData = response.data;
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-         },
-         getOrgs () {
-           axios.get('/api/organizations/')
-           .then(response => {
-            // JSON responses are automatically parsed.
-            this.orgs = response.data;
-            this.org = this.orgs[0]; // set default org
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-         },
-         getNets () {
+      },
+      methods: {
+        getMeraki(resource) {
+          axios.get(resource)
+            .then(response => {
+              // JSON responses are automatically parsed.
+              this.merakiData = response.data;
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        },
+        getOrgs() {
+          axios.get('/api/organizations/')
+            .then(response => {
+              // JSON responses are automatically parsed.
+              this.orgs = response.data;
+              this.org = this.orgs[0]; // set default org
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        },
+        getNets() {
           this.nets = []; // clear array
-           axios.get(this.netUrl)
-           .then(response => {
-            // JSON responses are automatically parsed.
-            
-            this.nets = response.data
-            this.net = this.nets[0]; // set default net
+          axios.get(this.netUrl)
+            .then(response => {
+              // JSON responses are automatically parsed.
+
+              this.nets = response.data
+              this.net = this.nets[0]; // set default net
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        },
+        getSsids() {
+          axios.get(this.ssidsUrl)
+            .then(response => {
+              // JSON responses are automatically parsed.
+              this.nets = response.data
+              this.merakiData = this.nets;
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        },
+        createNetwork(orgId, data) {
+          axios.post('/api/organizations/' + orgId + '/networks', data)
+            .then(response => {
+              console.log('createNetwork response', response.data);
+              this.merakiData = response.data;
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+        },
+        submitNetworkForm() {
+          this.createNetwork(this.org.id, {
+            name: this.networkForm.name,
+            tags: this.networkForm.tags,
+            timeZone: this.networkForm.timeZone,
+            type: this.networkForm.type
           })
-          .catch(e => {
-            this.errors.push(e)
-          })
-         },
-         getSsids () {
-           axios.get(this.ssidsUrl)
-           .then(response => {
-            // JSON responses are automatically parsed.
-            this.nets = response.data
-            this.merakiData = this.nets;
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-         },
-         createNetwork (orgId, data) {
-           axios.post('/api/organizations/'+orgId+'/networks', data )
-           .then(response => {
-             console.log('createNetwork response', response.data);
-             this.merakiData = response.data;
-           })
-           .catch(e => {
-            this.errors.push(e)
-          })
-         },
-         submitNetworkForm(){
-           this.createNetwork (this.org.id, {
-             name: this.networkForm.name,
-             tags: this.networkForm.tags,
-             timeZone: this.networkForm.timeZone,
-             type: this.networkForm.type
-           })
-         }
-       },
-       filters: {
-        pretty: function(value) {
+        }
+      },
+      filters: {
+        pretty: function (value) {
           return JSON.stringify(JSON.parse(value), null, 2);
         }
       },
@@ -299,8 +306,9 @@
           console.log('updating apiKey', this.apiKey)
           axios.defaults.headers.common['X-Cisco-Meraki-API-Key'] = this.apiKey // for all requests
         }
-       } 
-      })
+      }
+    })
   </script>
 </body>
+
 </html>

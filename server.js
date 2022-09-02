@@ -13,7 +13,7 @@ var configs = require("./configs.js");
 /* Local Configuration alternative
 var configs = {
     apiKey: 'YourAPIKey',
-    apiUrl: 'https://api.meraki.com/api/v0'
+    apiUrl: 'https://api.meraki.com/api/v1'
 };
 */
 
