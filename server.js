@@ -107,11 +107,9 @@ app.use("/", cors(corsOptions), express.static(path.join(__dirname, "public")));
 // Start server
 var port = process.env.PORT || 8085;
 var server = app.listen(port, () => {
-  console.log("WWW Server: http://" + server.address().address + port + "/");
+  console.log("WWW Server: " + "http://localhost:" + port + "/");
   console.log(
-    "Meraki API Client Proxy: http://" +
-      server.address().address +
-      ":" +
+    "Meraki API Client Proxy: http://localhost:" +
       port +
       "/api"
   );
